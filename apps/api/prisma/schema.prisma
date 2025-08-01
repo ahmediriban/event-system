@@ -1,0 +1,51 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  events    Event[]
+
+  @@map("users")
+}
+
+model Event {
+  id              String   @id @default(cuid())
+  title           String
+  description     String
+  date            DateTime
+  location        String
+  maxAttendees    Int
+  createdBy       String
+  createdAt       DateTime @default(now())
+
+  creator         User     @relation(fields: [createdBy], references: [id])
+  rsvps           RSVP[]
+
+  @@map("events")
+}
+
+model RSVP {
+  id           String   @id @default(cuid())
+  eventId      String
+  userEmail    String
+  userName     String
+  createdAt    DateTime @default(now())
+
+  event        Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, userEmail])
+  @@map("rsvps")
+}
+
