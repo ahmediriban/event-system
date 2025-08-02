@@ -1,0 +1,217 @@
+{
+	"info": {
+		"_postman_id": "1b09930d-35a5-4970-babf-dc2a78e4ff44",
+		"name": "Event System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6022563",
+		"_collection_link": "https://solar-station-817280.postman.co/workspace/Beste24-Team~e4afa8d5-f5cf-4f7b-8540-e585f6f8a210/collection/6022563-1b09930d-35a5-4970-babf-dc2a78e4ff44?action=share&source=collection_link&creator=6022563"
+	},
+	"item": [
+		{
+			"name": "get events",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "q6mV6MXh7v7wDMBI3niYzHolJNzhS2LXSnhYJxQOr6gAM0tQ3rqVBJRnhl93N0Z2bjAMNZPz8SMhkvJMKMEfhlPtt7hqvOwJ6UGnQuMWzgtAaUWBaW/0nvpoC4Wm7RsWvoLZEnKBE8BFm6GJ5BmgvCbv2ouTPLJXXtBI6Dj6Fdata33MbgeoF+9F2RaJ4ZMWH/RW4AievilRKhVvc71iXYDMLcXrVnNIYTFzdoHAzQSRJzRa34w2zMMnwfQcf19A9SwmYhrjfPJ7Kk0XxrbZQNiqLrESVLxdPpYl0BDaJpixBakTHN313lyZ1Ico9ZFn2a8Jblzc/0d7MMN5l8uuwXjQF+duc4ziJjnghwAilMxOu4qSBYzk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/ahmedabuiriban/Downloads/feed/1.csv"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/events",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"events"
+					],
+					"query": [
+						{
+							"key": "Authorization:",
+							"value": "aivenv1 q6mV6MXh7v7wDMBI3niYzHolJNzhS2LXSnhYJxQOr6gAM0tQ3rqVBJRnhl93N0Z2bjAMNZPz8SMhkvJMKMEfhlPtt7hqvOwJ6UGnQuMWzgtAaUWBaW/0nvpoC4Wm7RsWvoLZEnKBE8BFm6GJ5BmgvCbv2ouTPLJXXtBI6Dj6Fdata33MbgeoF+9F2RaJ4ZMWH/RW4AievilRKhVvc71iXYDMLcXrVnNIYTFzdoHAzQSRJzRa34w2zMMnwfQcf19A9SwmYhrjfPJ7Kk0XxrbZQNiqLrESVLxdPpYl0BDaJpixBakTHN313lyZ1Ico9ZFn2a8Jblzc/0d7MMN5l8uuwXjQF+duc4ziJjnghwAilMxOu4qSBYzk",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get event",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/events/event-2",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"events",
+						"event-2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create event",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbWRzcnNwMzIwMDAwcDg2Ymlrd2JwMzMwIiwiZW1haWwiOiJhZG1pbkBldmVudHN5c3RlbS5jb20iLCJpYXQiOjE3NTQxMDg4NzQsImV4cCI6MTc1NDE5NTI3NH0.CtbS9MHHaKikO3xuY1B_Hg84uxodp1-6rRpr7tSZRfo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Event\",\n    \"description\": \"This is event\",\n    \"date\": \"2024-06-15T09:00:00Z\",\n    \"maxAttendees\": 3,\n    \"location\": \"Cairo\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/events",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin@eventsystem.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"admin@eventsystem.com\",\n    \"password\": \"admin123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/auth/login",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create rsvp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userEmail\": \"ahmed@event1.com\",\n    \"userName\": \"ahmed\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/events/cmdtsxowi0001p8sdyk0bpszw/rsvp",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"events",
+						"cmdtsxowi0001p8sdyk0bpszw",
+						"rsvp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete rsvp",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userEmail\": \"ahmed@event1.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/events/cmdtsxowi0001p8sdyk0bpszw/rsvp",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"events",
+						"cmdtsxowi0001p8sdyk0bpszw",
+						"rsvp"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:3001",
+			"type": "default"
+		}
+	]
+}

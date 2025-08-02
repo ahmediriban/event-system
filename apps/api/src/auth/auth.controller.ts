@@ -30,12 +30,4 @@ export class AuthController {
     // The client will handle clearing the cookie
     return { message: 'Logged out successfully' };
   }
-
-  @Get('me')
-  @UseGuards(JwtAuthGuard)
-  async getCurrentUser(@Request() req: RequestWithUser) {
-    return {
-      user: req.user,
-    };
-  }
 } 
