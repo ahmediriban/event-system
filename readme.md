@@ -56,9 +56,9 @@ The applications will be available at:
 
 ### API Setup
 ```bash
-cd packages/schema && pnpm build
-cd apps/api
 pnpm install
+pnpm --filter @event-system/schema build
+cd apps/api
 pnpm db:generate
 pnpm db:migrate
 pnpm db:seed
@@ -67,9 +67,9 @@ pnpm dev
 
 ### Web Setup
 ```bash
-cd packages/schema && pnpm build
-cd apps/web
 pnpm install
+pnpm --filter @event-system/schema build
+cd apps/web
 pnpm dev
 ```
 
