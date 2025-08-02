@@ -4,45 +4,17 @@ import { authOptions } from '@/lib/auth';
 
 const API_BASE_URL = process.env.API_URL || 'http://localhost:3001';
 
-export async function GET(
+export const dynamic = 'force-dynamic';
+
+async function handler(
   request: NextRequest,
   { params }: { params: Promise<{ path: string[] }> }
 ) {
   const resolvedParams = await params;
-  return handleRequest(request, resolvedParams.path, 'GET');
-}
-
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ path: string[] }> }
-) {
-  const resolvedParams = await params;
-  return handleRequest(request, resolvedParams.path, 'POST');
-}
-
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ path: string[] }> }
-) {
-  const resolvedParams = await params;
-  return handleRequest(request, resolvedParams.path, 'PUT');
-}
-
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ path: string[] }> }
-) {
-  const resolvedParams = await params;
-  return handleRequest(request, resolvedParams.path, 'DELETE');
-}
-
-async function handleRequest(
-  request: NextRequest,
-  pathSegments: string[],
-  method: string
-) {
+  const method = request.method;
+  
   try {
-    const path = pathSegments.join('/');
+    const path = resolvedParams.path.join('/');
     const url = new URL(request.url);
     const queryString = url.search;
     
@@ -66,7 +38,7 @@ async function handleRequest(
     };
     
     // Add body for POST, PUT, DELETE requests
-    if (['POST', 'PUT', 'DELETE'].includes(method)) {
+    if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) {
       const body = await request.text();
       if (body) {
         requestOptions.body = body;
@@ -95,4 +67,12 @@ async function handleRequest(
       { status: 500 }
     );
   }
-} 
+}
+
+export { handler as GET };
+export { handler as POST };
+export { handler as PUT };
+export { handler as DELETE };
+export { handler as PATCH };
+export { handler as OPTIONS };
+export { handler as HEAD }; 
