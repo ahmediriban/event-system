@@ -10,34 +10,36 @@ A full-stack event management system with Next.js frontend and NestJS backend.
 
 ## Quick Setup
 
-### 1. Install Dependencies
+### 1. Setup Environment Variables
+Copy the example environment files:
 ```bash
-pnpm install
+cp apps/api/.env.example apps/api/.env
+cp apps/web/.env.example apps/web/.env
 ```
 
-### 2. Start Database
+### 2. Install And Build Dependencies
+```bash
+pnpm install && pnpm build
+```
+
+### 3. Start Database
 ```bash
 docker-compose up postgres -d
 ```
 
-### 3. Build Schema Package
-```bash
-pnpm --filter @event-system/schema build
-```
-
 ### 4. Setup Database
 ```bash
-# Generate Prisma client
-pnpm db:generate
-
 # Run migrations
 pnpm db:migrate
+
+# Generate Prisma client
+pnpm db:generate
 
 # Seed database
 pnpm db:seed
 ```
 
-### 5. Start Development Servers
+### 6. Start Development Servers
 ```bash
 # Start both API and Web apps
 pnpm dev
@@ -52,51 +54,6 @@ The applications will be available at:
 - **Frontend**: [https://event-system-web.vercel.app/](https://event-system-web.vercel.app/)
 - **Backend API**: [https://event-system-production.up.railway.app/](https://event-system-production.up.railway.app/)
 
-## Individual App Setup
-
-### API Setup
-```bash
-pnpm install
-pnpm --filter @event-system/schema build
-cd apps/api
-pnpm db:generate
-pnpm db:migrate
-pnpm db:seed
-pnpm dev
-```
-
-### Web Setup
-```bash
-pnpm install
-pnpm --filter @event-system/schema build
-cd apps/web
-pnpm dev
-```
-
-## Database Commands
-
-- `pnpm db:generate` - Generate Prisma client
-- `pnpm db:push` - Push schema to database
-- `pnpm db:migrate` - Run migrations
-- `pnpm db:seed` - Seed database with sample data
-- `pnpm db:studio` - Open Prisma Studio
-
-## Environment Variables
-
-Create `.env` files in `apps/api` and `apps/web` directories:
-
-**API (.env)**
-```
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/event_system?schema=public"
-JWT_SECRET="your-jwt-secret"
-```
-
-**Web (.env.local)**
-```
-NEXTAUTH_SECRET="your-nextauth-secret"
-NEXTAUTH_URL="http://localhost:3000"
-API_URL="http://localhost:3001"
-```
 
 ## API Documentation
 
