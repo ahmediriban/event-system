@@ -24,26 +24,10 @@ api.interceptors.response.use(
 );
 
 // Helper function to handle API errors
-export const handleApiError = (error: unknown): ApiError => {
-  if (error instanceof AxiosError) {
-    return {
+export const handleApiError = (error: AxiosError<ApiError>): ApiError => {
+  return {
       message: error.response?.data?.message || 'Network error occurred',
       error: error.response?.data?.error || 'Network Error',
       statusCode: error.response?.status || 500,
     };
-  }
-  
-  if (error instanceof Error) {
-    return {
-      message: error.message,
-      error: 'Unknown Error',
-      statusCode: 500,
-    };
-  }
-  
-  return {
-    message: 'Network error occurred',
-    error: 'Network Error',
-    statusCode: 500,
-  };
 }; 

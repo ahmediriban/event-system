@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { eventsApi, handleApiError } from '@/lib';
+import { ApiError, eventsApi } from '@/lib';
 import { type CreateEvent, CreateEventSchema } from '@event-system/schema';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -42,8 +42,8 @@ export function CreateEventForm() {
       const response = await eventsApi.create(eventData);
       router.push(`/events/${response.id}`);
       } catch (err: unknown) {
-        const apiError = handleApiError(err);
-        setError(apiError.message as string);
+        const ApiError = err as ApiError;
+        setError(ApiError.message as string);
     } finally {
       setLoading(false);
     }

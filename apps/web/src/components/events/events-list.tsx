@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { Plus } from 'lucide-react';
-import { eventsApi, handleApiError } from '@/lib';
+import { ApiError, eventsApi } from '@/lib';
 import { type EventListResponse } from '@event-system/schema';
 import { Spinner } from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';
@@ -49,8 +49,8 @@ export function EventsList({ initialEvents, initialPage }: EventsListProps) {
       const data = await eventsApi.getAll(page, limit);
       setEvents(data);
     } catch (err: unknown) {
-      const apiError = handleApiError(err);
-      setError(apiError.message as string);
+      const ApiError = err as ApiError;
+      setError(ApiError.message as string);
     } finally {
       setLoading(false);
     }

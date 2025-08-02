@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { Trash2 } from 'lucide-react';
-import { eventsApi, handleApiError } from '@/lib';
+import { ApiError, eventsApi } from '@/lib';
 import { type EventResponse, CreateRsvpSchema, type CreateRsvp, type Rsvp } from '@event-system/schema';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -53,8 +53,8 @@ export function EventDetail({ eventId }: EventDetailProps) {
       setEvent(data);
       setRsvps(data.rsvps);
     } catch (err: unknown) {
-      const apiError = handleApiError(err);
-      setError(apiError.message as string);
+      const ApiError = err as ApiError;
+      setError(ApiError.message as string);
     } finally {
       setLoading(false);
     }
@@ -78,8 +78,8 @@ export function EventDetail({ eventId }: EventDetailProps) {
       // Reload event to update attendee count
       await loadEvent();
     } catch (err: unknown) {
-      const apiError = handleApiError(err);
-      setRsvpError(apiError.message as string);
+      const ApiError = err as ApiError;
+      setRsvpError(ApiError.message as string);
     } finally {
       setRsvpLoading(false);
     }
@@ -105,8 +105,8 @@ export function EventDetail({ eventId }: EventDetailProps) {
       // Reload event to update attendee count
       await loadEvent();
     } catch (err: unknown) {
-      const apiError = handleApiError(err);
-      setRsvpError(apiError.message as string);
+      const ApiError = err as ApiError;
+      setRsvpError(ApiError.message as string);
     } finally {
       setDeleteLoading(null);
     }

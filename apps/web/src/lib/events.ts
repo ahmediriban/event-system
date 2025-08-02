@@ -1,4 +1,5 @@
-import { api, handleApiError } from './api';
+import { AxiosError } from 'axios';
+import { api, ApiError, handleApiError } from './api';
 import { 
   type CreateEvent, 
   type EventResponse, 
@@ -16,7 +17,7 @@ export const eventsApi = {
       const response = await api.get<EventListResponse>(`/events?page=${page}&limit=${limit}`);
       return response.data;
     } catch (error) {
-      throw handleApiError(error);
+      throw handleApiError(error as AxiosError<ApiError>);
     }
   },
 
@@ -26,7 +27,7 @@ export const eventsApi = {
       const response = await api.get<EventListResponse>(`/events/my-events?page=${page}&limit=${limit}`);
       return response.data;
     } catch (error) {
-      throw handleApiError(error);
+      throw handleApiError(error as AxiosError<ApiError>);
     }
   },
 
@@ -36,7 +37,7 @@ export const eventsApi = {
       const response = await api.get<EventResponse>(`/events/${id}`);
       return response.data;
     } catch (error) {
-      throw handleApiError(error);
+      throw handleApiError(error as AxiosError<ApiError>);
     }
   },
 
@@ -46,7 +47,7 @@ export const eventsApi = {
       const response = await api.post<EventResponse>('/events', eventData);
       return response.data;
     } catch (error) {
-      throw handleApiError(error);
+      throw handleApiError(error as AxiosError<ApiError>);
     }
   },
 
@@ -56,7 +57,7 @@ export const eventsApi = {
       const response = await api.post(`/events/${eventId}/rsvp`, rsvpData);
       return response.data;
     } catch (error) {
-      throw handleApiError(error);
+      throw handleApiError(error as AxiosError<ApiError>);
     }
   },
 
@@ -68,7 +69,7 @@ export const eventsApi = {
       });
       return response.data;
     } catch (error) {
-      throw handleApiError(error);
+      throw handleApiError(error as AxiosError<ApiError>);
     }
   },
 }; 
