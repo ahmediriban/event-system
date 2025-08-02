@@ -12,6 +12,15 @@ export const EventSchema = z.object({
   createdAt: z.date(),
 });
 
+// RSVP schemas
+export const RsvpSchema = z.object({
+  id: z.string().cuid(),
+  eventId: z.string().cuid(),
+  userEmail: z.string().email(),
+  userName: z.string().min(1),
+  createdAt: z.date(),
+});
+
 export const CreateEventSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   description: z.string().min(1, 'Description is required'),
@@ -34,6 +43,7 @@ export const EventResponseSchema = z.object({
     name: z.string(),
     email: z.string().email(),
   }),
+  rsvps: z.array(RsvpSchema),
   _count: z.object({
     rsvps: z.number(),
   }),
@@ -49,21 +59,12 @@ export const EventListResponseSchema = z.object({
   }),
 });
 
-// RSVP schemas
-export const RsvpSchema = z.object({
-  id: z.string().cuid(),
-  eventId: z.string().cuid(),
-  userEmail: z.string().email(),
-  userName: z.string().min(1),
-  createdAt: z.date(),
-});
-
 export const CreateRsvpSchema = z.object({
   userEmail: z.string().email('Please provide a valid email address'),
   userName: z.string().min(1, 'User name is required'),
 });
 
-export const CancelRsvpSchema = z.object({
+export const DeleteRsvpSchema = z.object({
   userEmail: z.string().email('Please provide a valid email address'),
 });
 
@@ -74,4 +75,4 @@ export type EventResponse = z.infer<typeof EventResponseSchema>;
 export type EventListResponse = z.infer<typeof EventListResponseSchema>;
 export type Rsvp = z.infer<typeof RsvpSchema>;
 export type CreateRsvp = z.infer<typeof CreateRsvpSchema>;
-export type CancelRsvp = z.infer<typeof CancelRsvpSchema>; 
+export type DeleteRsvp = z.infer<typeof DeleteRsvpSchema>; 

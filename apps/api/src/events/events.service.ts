@@ -23,6 +23,7 @@ export class EventsService {
               email: true,
             },
           },
+          rsvps: true,
           _count: {
             select: {
               rsvps: true,
@@ -34,6 +35,53 @@ export class EventsService {
         },
       }),
       this.prisma.event.count(),
+    ]);
+
+    return {
+      events,
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit),
+      },
+    };
+  }
+
+  async findMyEvents(userId: string, page: number = 1, limit: number = 10) {
+    const skip = (page - 1) * limit;
+    
+    const [events, total] = await Promise.all([
+      this.prisma.event.findMany({
+        where: {
+          createdBy: userId,
+        },
+        skip,
+        take: limit,
+        include: {
+          creator: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+          rsvps: true,
+          _count: {
+            select: {
+              rsvps: true,
+            },
+          },
+        },
+        orderBy: {
+          date: 'asc',
+        },
+      }),
+      this.prisma.event.count({
+        where: {
+          createdBy: userId,
+        },
+      }),
     ]);
 
     return {
@@ -82,6 +130,7 @@ export class EventsService {
         createdBy: userId,
       },
       include: {
+        rsvps: true,
         creator: {
           select: {
             id: true,
@@ -143,7 +192,7 @@ export class EventsService {
     });
   }
 
-  async cancelRsvp(eventId: string, userEmail: string) {
+  async deleteRsvp(eventId: string, userEmail: string) {
     const rsvp = await this.prisma.rSVP.findUnique({
       where: {
         eventId_userEmail: {
@@ -166,6 +215,6 @@ export class EventsService {
       },
     });
 
-    return { message: 'RSVP cancelled successfully' };
+    return { message: 'RSVP deleted successfully' };
   }
 } 

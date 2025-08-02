@@ -20,7 +20,7 @@ import {
   type EventListResponse,
   type EventResponse,
   type SuccessResponse,
-  CancelRsvpSchema,
+  DeleteRsvpSchema,
   CreateEventSchema,
   CreateRsvpSchema
 } from '@event-system/schema';
@@ -43,6 +43,16 @@ export class EventsController {
   ): Promise<EventListResponse> {
     const { page = 1, limit = 10 } = PaginationQuerySchema.parse(query);
     return this.eventsService.findAll(page, limit);
+  }
+
+  @Get('my-events')
+  @UseGuards(JwtAuthGuard)
+  async findMyEvents(
+    @Query() query: PaginationQuery,
+    @Request() req: RequestWithUser
+  ): Promise<EventListResponse> {
+    const { page = 1, limit = 10 } = PaginationQuerySchema.parse(query);
+    return this.eventsService.findMyEvents(req.user.id, page, limit);
   }
 
   @Get(':id')
@@ -68,10 +78,10 @@ export class EventsController {
   }
 
   @Delete(':id/rsvp')
-  async cancelRsvp(
+  async deleteRsvp(
     @Param('id') id: string,
-    @ZodValidation(CancelRsvpSchema) body: { userEmail: string },
+    @ZodValidation(DeleteRsvpSchema) body: { userEmail: string },
   ): Promise<SuccessResponse> {
-    return this.eventsService.cancelRsvp(id, body.userEmail);
+    return this.eventsService.deleteRsvp(id, body.userEmail);
   }
 } 

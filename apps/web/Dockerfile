@@ -6,10 +6,14 @@ RUN npm install -g pnpm
 # Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY apps/web/package.json ./apps/web/
-COPY packages/*/package.json ./packages/*/
+# Copy package.json
+COPY package.json ./
+
+# Copy schema package
+COPY ../../packages/schema ./packages/schema/
+
+# Build schema package
+RUN cd packages/schema && pnpm build
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile
@@ -21,4 +25,4 @@ COPY . .
 EXPOSE 3000
 
 # Default command
-CMD ["pnpm", "--filter", "@event-system/web", "dev"] 
+CMD ["pnpm", "dev"] 
